@@ -5,6 +5,7 @@ gemspec
 gem 'ffi', '~> 1.12', '>= 1.12.2'
 
 group :development do
+  gem 'ffidb'
   gem 'rake'
   gem 'rspec'
   gem 'yard'

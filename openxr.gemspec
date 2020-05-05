@@ -30,6 +30,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version      = '>= 2.7.0'
   gem.required_rubygems_version  = '>= 3.1.2' # Ruby 2.7.0
   gem.requirements               = []
+  gem.add_development_dependency 'ffidb',     '~> 0.6'
   gem.add_development_dependency 'rake',      '>= 13'
   gem.add_development_dependency 'rspec',     '>= 3.9'
   gem.add_development_dependency 'yard' ,     '>= 0.9'

@@ -75,6 +75,11 @@ module OpenXR::API
   XR_TYPE_API_LAYER_PROPERTIES          = 1
   XR_TYPE_EXTENSION_PROPERTIES          = 2
   XR_TYPE_INSTANCE_CREATE_INFO          = 3
+  XR_TYPE_SYSTEM_GET_INFO               = 4
+  XR_TYPE_SYSTEM_PROPERTIES             = 5
+  XR_TYPE_VIEW_LOCATE_INFO              = 6
+  XR_TYPE_VIEW                          = 7
+  XR_TYPE_SESSION_CREATE_INFO           = 8
 
   XrFormFactor                          = :int # enum
   XR_FORM_FACTOR_HEAD_MOUNTED_DISPLAY   = 1

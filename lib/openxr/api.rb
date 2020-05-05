@@ -50,6 +50,7 @@ module OpenXR::API
   XR_SUCCESS                   = 0
   XR_ERROR_VALIDATION_FAILURE  = -1
   XR_ERROR_RUNTIME_FAILURE     = -2
+  XR_ERROR_HANDLE_INVALID      = -12
 
   XrStructureType              = :int # enum
   XR_TYPE_UNKNOWN              = 0

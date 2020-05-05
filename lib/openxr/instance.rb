@@ -16,9 +16,11 @@ class OpenXR::Instance
   # @return [Object]
   def self.create(app_name, app_version: nil, api_version: nil, &block)
     instance = self.new(app_name, app_version: app_version, api_version: api_version)
-    result = block.call(instance) if block_given?
-    instance.destroy!
-    result
+    begin
+      block.call(instance) if block_given?
+    ensure
+      instance.destroy!
+    end
   end
 
   ##
@@ -41,8 +43,14 @@ class OpenXR::Instance
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrcreateinstance3
     case result = xrCreateInstance(request, @struct)
       when XR_SUCCESS
-      else raise Error.new(result, :xrCreateInstance) # TODO
+      else raise OpenXR::Error.new(result, :xrCreateInstance) # TODO
     end
+  end
+
+  #
+  # @return [FFI::Pointer]
+  def handle
+    @struct[:handle]
   end
 
   ##
@@ -52,8 +60,8 @@ class OpenXR::Instance
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrdestroyinstance3
     case result = xrDestroyInstance(@struct[:handle])
       when XR_SUCCESS then @struct = nil
-      when XR_ERROR_HANDLE_INVALID then raise Error::HandleInvalid.new(:xrDestroyInstance)
-      else raise Error.new(result, :xrDestroyInstance) # unreachable
+      when XR_ERROR_HANDLE_INVALID then raise OpenXR::Error::HandleInvalid.new(:xrDestroyInstance)
+      else raise OpenXR::Error.new(result, :xrDestroyInstance) # unreachable
     end
   end
 end # OpenXR::Instance

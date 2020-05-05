@@ -29,8 +29,8 @@ class OpenXR::Instance
     @struct = XrInstance.new
 
     request = XrInstanceCreateInfo.new
-    request[:type] = XR_TYPE_INSTANCE_CREATE_INFO
-    request[:next] = nil
+    request[:base][:type] = XR_TYPE_INSTANCE_CREATE_INFO
+    request[:base][:next] = nil
     request[:createFlags] = 0
     request[:applicationInfo][:applicationName] = app_name.to_s
     request[:applicationInfo][:applicationVersion] = (app_version || 0).to_i

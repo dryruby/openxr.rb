@@ -3,8 +3,23 @@
 require_relative 'api'
 require_relative 'error'
 
+##
+# @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#instance
 class OpenXR::Instance
   include OpenXR::API
+
+  ##
+  # @param  [String, #to_s]  app_name
+  # @param  [Integer, #to_i] app_version
+  # @param  [Integer, #to_i] api_version
+  # @yield  [instance]
+  # @return [Object]
+  def self.create(app_name, app_version: nil, api_version: nil, &block)
+    instance = self.new(app_name, app_version: app_version, api_version: api_version)
+    result = block.call(instance) if block_given?
+    instance.destroy!
+    result
+  end
 
   ##
   # @param  [String, #to_s]  app_name

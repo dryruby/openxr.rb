@@ -6,6 +6,71 @@ module OpenXR::API
   extend FFI::Library
   ffi_lib ["libopenxr_loader.so.1", "openxr_loader"]
 
+  XrVersion  = :uint64
+  XrFlags64  = :uint64
+  XrSystemId = :uint64
+  XrBool32   = :uint32
+  XrPath     = :uint64
+  XrTime     = :int64
+  XrDuration = :int64
+
+  class XrInstance < FFI::Struct
+    layout :handle, :pointer
+  end
+
+  class XrSession < FFI::Struct
+    layout :handle, :pointer
+  end
+
+  class XrSpace < FFI::Struct
+    layout :handle, :pointer
+  end
+
+  class XrAction < FFI::Struct
+    layout :handle, :pointer
+  end
+
+  class XrSwapchain < FFI::Struct
+    layout :handle, :pointer
+  end
+
+  class XrActionSet < FFI::Struct
+    layout :handle, :pointer
+  end
+
+  XrResult                     = :int # enum
+  XR_SUCCESS                   = 0
+  XR_ERROR_VALIDATION_FAILURE  = -1
+  XR_ERROR_RUNTIME_FAILURE     = -2
+
+  XrStructureType              = :int # enum
+  XR_TYPE_UNKNOWN              = 0
+  XR_TYPE_API_LAYER_PROPERTIES = 1
+  XR_TYPE_EXTENSION_PROPERTIES = 2
+  XR_TYPE_INSTANCE_CREATE_INFO = 3
+
+  XrInstanceCreateFlags = XrFlags64
+  XrSessionCreateFlags  = XrFlags64
+
+  class XrApplicationInfo < FFI::Struct
+    layout :applicationName,       [:char, 128],
+           :applicationVersion,    :uint32,
+           :engineName,            [:char, 128],
+           :engineVersion,         :uint32,
+           :apiVersion,            XrVersion
+  end
+
+  class XrInstanceCreateInfo < FFI::Struct
+    layout :type,                  XrStructureType,
+           :next,                  :pointer,
+           :createFlags,           XrInstanceCreateFlags,
+           :applicationInfo,       XrApplicationInfo,
+           :enabledApiLayerCount,  :uint32,
+           :enabledApiLayerNames,  :string,
+           :enabledExtensionCount, :uint32,
+           :enabledExtensionNames, :string
+  end
+
   attach_function :xrAcquireSwapchainImage, [:pointer, :pointer, :pointer], :int
   attach_function :xrApplyHapticFeedback, [:pointer, :pointer, :pointer], :int
   attach_function :xrAttachSessionActionSets, [:pointer, :pointer], :int

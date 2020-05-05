@@ -6,6 +6,14 @@ module OpenXR::API
   extend FFI::Library
   ffi_lib ["libopenxr_loader.so.1", "openxr_loader"]
 
+  ##
+  # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#api-version-numbers-and-semantics
+  def self.XR_MAKE_VERSION(major, minor, patch)
+    (((major.to_i & 0xffff) << 48) + ((minor.to_i & 0xffff) << 32) + (patch.to_i & 0xffffffff))
+  end
+
+  XR_CURRENT_API_VERSION = XR_MAKE_VERSION(1, 0, 8)
+
   XrVersion  = :uint64
   XrFlags64  = :uint64
   XrSystemId = :uint64

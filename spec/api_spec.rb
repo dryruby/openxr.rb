@@ -5,6 +5,12 @@ require_relative '../lib/openxr'
 include OpenXR::API
 
 RSpec.describe OpenXR::API do
+  describe "XR_MAKE_VERSION" do
+    it "returns the correct result for version 1.0.8" do
+      expect(OpenXR::API::XR_MAKE_VERSION(1, 0, 8)).to eq(0x1000000000008)
+    end
+  end
+
   describe "XrInstance" do
     it "must have the correct size" do
       expect(XrInstance.size).to eq(8)

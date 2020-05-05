@@ -19,7 +19,7 @@ class OpenXR::Instance
     begin
       block.call(instance) if block_given?
     ensure
-      instance.destroy!
+      instance&.destroy!
     end
   end
 

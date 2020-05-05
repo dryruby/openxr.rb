@@ -26,7 +26,7 @@ class OpenXR::System
         else raise OpenXR::Error.new(result, :xrGetSystem)
       end
     ensure
-      system_id.free
+      system_id&.free
     end
   end
 

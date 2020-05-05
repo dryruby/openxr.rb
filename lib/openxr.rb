@@ -4,7 +4,16 @@ module OpenXR; end
 
 require_relative 'openxr/api'
 require_relative 'openxr/error'
+require_relative 'openxr/extension'
 require_relative 'openxr/instance'
 require_relative 'openxr/session'
 require_relative 'openxr/system'
 require_relative 'openxr/version'
+
+module OpenXR
+  ##
+  # @return [Boolean]
+  def self.has_extensions?
+    !!(Extension.count.nonzero?)
+  end
+end # OpenXR

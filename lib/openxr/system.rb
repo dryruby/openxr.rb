@@ -5,6 +5,7 @@ require_relative 'api'
 ##
 # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#system
 class OpenXR::System
+  extend OpenXR::API
   include OpenXR::API
 
   ##

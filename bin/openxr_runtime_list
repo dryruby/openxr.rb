@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# This is a Ruby version of the test program in the OpenXR SDK at:
+# https://github.com/KhronosGroup/OpenXR-SDK-Source/blob/master/src/tests/list/list.cpp
+
+require_relative '../lib/openxr'
+
+# Configure the OpenXR loader to default to the Monado runtime:
+ENV['XR_RUNTIME_JSON'] ||= '/usr/local/share/openxr/1/openxr_monado.json'
+
+# Print information about the default system for the HMD form factor:
+OpenXR::Instance.create($0) do |instance|
+  system = OpenXR::System.for_form_factor(instance, OpenXR::API::XR_FORM_FACTOR_HEAD_MOUNTED_DISPLAY)
+  puts <<~EOS
+    Evaluating system
+    \t           name: '#{system.name}'
+    \t       vendorId: 0x#{'%02x' % system.vendor_id}
+    \t       systemId: 0x#{'%02x' % system.id}
+    \t     systemName: #{system.name}
+  EOS
+end
+
+# List information about all available extensions:
+puts "List instance extensions"
+OpenXR::Extension.each do |extension|
+  puts "\t#{extension.name} #{extension.version}"
+end

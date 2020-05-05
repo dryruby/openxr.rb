@@ -1,5 +1,5 @@
-OpenXR Bindings for Ruby
-========================
+OpenXR for Ruby
+===============
 
 [![Project license](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://unlicense.org)
 [![RubyGems gem version](https://img.shields.io/gem/v/openxr.svg)](https://rubygems.org/gems/openxr)
@@ -12,6 +12,7 @@ Installation
 Prerequisites
 -------------
 
+- [Ruby](https://www.ruby-lang.org/en/) 2.7+
 - [OpenXR SDK](https://github.com/KhronosGroup/OpenXR-SDK) 1.0.8+
 
 Examples

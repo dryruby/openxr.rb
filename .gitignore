@@ -10,3 +10,7 @@
 .yardoc
 Gemfile.lock
 *.gem
+
+# OpenXR loader symlinks
+libopenxr_loader.dylib
+libopenxr_loader.so

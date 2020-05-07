@@ -4,11 +4,15 @@ Gem::Specification.new do |gem|
 
   gem.name               = 'openxr'
   gem.homepage           = 'https://github.com/dryruby/openxr.rb'
-  gem.license            = 'Unlicense'
-  gem.summary            = 'OpenXR bindings for Ruby.'
-  gem.description        = gem.summary
+  gem.license            = "Unlicense"
+  gem.summary            = "OpenXR bindings for Ruby."
+  gem.description        = <<~EOS
+    OpenXR.rb implements Ruby bindings for OpenXR 1.0, the open standard and
+    cross-platform API for virtual reality (VR) and augmented reality (AR)
+    hardware.
+  EOS
 
-  gem.author             = 'Arto Bendiken'
+  gem.author             = "Arto Bendiken"
   gem.email              = 'arto@bendiken.net'
 
   gem.metadata = {

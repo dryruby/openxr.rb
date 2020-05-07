@@ -2,13 +2,13 @@ OpenXR for Ruby
 ===============
 
 [![Project license](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://unlicense.org)
-[![RubyGems gem version](https://img.shields.io/gem/v/openxr.svg)](https://rubygems.org/gems/openxr)
+[![RubyGems gem](https://img.shields.io/gem/v/openxr.svg)](https://rubygems.org/gems/openxr)
+[![Ruby compatibility](https://img.shields.io/badge/ruby-2.7%2B-red)](https://rubygems.org/gems/openxr)
 
-This project provides [FFI](https://github.com/ffi/ffi/wiki) bindings to
-enable programming with [OpenXR](https://www.khronos.org/openxr/) from Ruby.
-
-OpenXR is the new cross-platform, open standard and API for virtual reality
-(VR) and augmented reality (AR) devices. (Think OpenGL for VR/AR.)
+**OpenXR.rb** implements Ruby bindings for [OpenXR](https://www.khronos.org/openxr/)
+[1.0](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html),
+the open standard and cross-platform API for virtual reality (VR) and
+augmented reality (AR) hardware.
 
 Installation
 ------------
@@ -19,6 +19,8 @@ Prerequisites
 -------------
 
 - [Ruby](https://www.ruby-lang.org/en/) 2.7+
+  with [FFI](https://github.com/ffi/ffi/wiki)
+
 - [OpenXR SDK](https://github.com/KhronosGroup/OpenXR-SDK) 1.0.8+
 
 Examples
@@ -52,7 +54,7 @@ Install the Debian packages for the OpenXR SDK's loader as follows:
 
     $ apt install libopenxr-loader1
 
-That is the only required package. Find related packages of interest using:
+That's the only required package, but find related packages of interest using:
 
     $ apt search openxr
 

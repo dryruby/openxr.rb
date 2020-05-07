@@ -3,6 +3,8 @@
 require_relative 'api'
 
 ##
+# An OpenXR API layer.
+#
 # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#api-layers
 class OpenXR::Layer
   # TODO

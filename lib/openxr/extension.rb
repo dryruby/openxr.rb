@@ -1,10 +1,13 @@
 # This is free and unencumbered software released into the public domain.
 
 require_relative 'api'
+require_relative 'result'
 
 require 'ffi'
 
 ##
+# An OpenXR instance extension.
+#
 # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#extensions
 class OpenXR::Extension < Struct.new(:name, :version)
   extend OpenXR::API
@@ -18,7 +21,7 @@ class OpenXR::Extension < Struct.new(:name, :version)
       # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrenumerateinstanceextensionproperties3
       case result = xrEnumerateInstanceExtensionProperties(nil, 0, response, nil)
         when XR_SUCCESS then response.read(:uint32)
-        else raise OpenXR::Error.new(result, :xrEnumerateInstanceExtensionProperties)
+        else raise OpenXR::Result.new(result, :xrEnumerateInstanceExtensionProperties)
       end
     ensure
       response&.free
@@ -60,7 +63,7 @@ class OpenXR::Extension < Struct.new(:name, :version)
             available[extension_name] = self.new(extension_name, extension_version)
             available
           end
-        else raise OpenXR::Error.new(result, :xrEnumerateInstanceExtensionProperties)
+        else raise OpenXR::Result.new(result, :xrEnumerateInstanceExtensionProperties)
       end
     ensure
       response_array&.free

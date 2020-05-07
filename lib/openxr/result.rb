@@ -2,7 +2,11 @@
 
 require_relative 'api'
 
-class OpenXR::Error < StandardError
+##
+# An OpenXR result code.
+#
+# @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#return-codes
+class OpenXR::Result < StandardError
   include OpenXR::API
 
   attr_reader :result
@@ -12,9 +16,9 @@ class OpenXR::Error < StandardError
     super("#{function} returned #{result}")
   end
 
-  class HandleInvalid < OpenXR::Error
+  class HandleInvalid < OpenXR::Result
     def initialize(function)
       super(XR_ERROR_HANDLE_INVALID, function)
     end
   end
-end # OpenXR::Error
+end # OpenXR::Result

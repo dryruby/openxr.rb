@@ -1,11 +1,14 @@
 # This is free and unencumbered software released into the public domain.
 
 require_relative 'api'
-require_relative 'error'
+require_relative 'handle'
+require_relative 'result'
 
 ##
+# An OpenXR instance handle.
+#
 # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#instance
-class OpenXR::Instance
+class OpenXR::Instance < OpenXR::Handle
   include OpenXR::API
 
   ##
@@ -43,7 +46,7 @@ class OpenXR::Instance
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrcreateinstance3
     case result = xrCreateInstance(request, @struct)
       when XR_SUCCESS
-      else raise OpenXR::Error.new(result, :xrCreateInstance) # TODO
+      else raise OpenXR::Result.new(result, :xrCreateInstance) # TODO
     end
   end
 
@@ -60,8 +63,8 @@ class OpenXR::Instance
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrdestroyinstance3
     case result = xrDestroyInstance(@struct[:handle])
       when XR_SUCCESS then @struct = nil
-      when XR_ERROR_HANDLE_INVALID then raise OpenXR::Error::HandleInvalid.new(:xrDestroyInstance)
-      else raise OpenXR::Error.new(result, :xrDestroyInstance) # unreachable
+      when XR_ERROR_HANDLE_INVALID then raise OpenXR::Result::HandleInvalid.new(:xrDestroyInstance)
+      else raise OpenXR::Result.new(result, :xrDestroyInstance) # unreachable
     end
   end
 end # OpenXR::Instance

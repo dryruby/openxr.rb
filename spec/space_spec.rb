@@ -4,6 +4,6 @@ require_relative '../lib/openxr'
 
 include OpenXR
 
-RSpec.describe OpenXR::Error do
+RSpec.describe OpenXR::Space do
   # TODO
 end

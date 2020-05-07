@@ -1,8 +1,11 @@
 # This is free and unencumbered software released into the public domain.
 
 require_relative 'api'
+require_relative 'result'
 
 ##
+# An OpenXR system.
+#
 # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#system
 class OpenXR::System
   extend OpenXR::API
@@ -24,12 +27,15 @@ class OpenXR::System
       case result = xrGetSystem(instance.handle, request, system_id)
         when XR_SUCCESS then self.new(instance, system_id.read(XrSystemId))
         #when XR_ERROR_FORM_FACTOR_UNAVAILABLE then # TODO
-        else raise OpenXR::Error.new(result, :xrGetSystem)
+        else raise OpenXR::Result.new(result, :xrGetSystem)
       end
     ensure
       system_id&.free
     end
   end
+
+  # @return [Instance]
+  attr_reader :instance
 
   # @return [API::XrSystemId]
   attr_reader :id
@@ -70,7 +76,7 @@ class OpenXR::System
           :orientation_tracking => response[:trackingProperties][:orientationTracking] == XR_TRUE,
           :position_tracking    => response[:trackingProperties][:positionTracking] == XR_TRUE,
         }
-      else raise OpenXR::Error.new(result, :xrGetSystemProperties)
+      else raise OpenXR::Result.new(result, :xrGetSystemProperties)
     end
   end
 end # OpenXR::System

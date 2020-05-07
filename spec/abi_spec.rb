@@ -47,6 +47,12 @@ RSpec.describe OpenXR::ABI do
     end
   end
 
+  describe "XrBaseStructure" do
+    it "must have the correct size" do
+      expect(XrBaseStructure.size).to eq(16)
+    end
+  end
+
   describe "XrApplicationInfo" do
     it "must have the correct size" do
       expect(XrApplicationInfo.size).to eq(272)

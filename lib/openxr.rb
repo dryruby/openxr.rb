@@ -2,6 +2,7 @@
 
 module OpenXR; end
 
+require_relative 'openxr/abi'
 require_relative 'openxr/api'
 require_relative 'openxr/error'
 require_relative 'openxr/extension'

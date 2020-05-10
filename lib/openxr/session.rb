@@ -21,6 +21,7 @@ class OpenXR::Session < OpenXR::Handle
   ##
   # @param  [System]
   # @param  [XrGraphicsBinding] graphics_binding
+  # @raise  [Result::Error] if `xrCreateSession` failed
   def initialize(system, graphics_binding = nil)
     @instance = system.instance
     @system   = system
@@ -35,7 +36,7 @@ class OpenXR::Session < OpenXR::Handle
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrcreatesession3
     case result = xrCreateSession(instance.handle, request, @struct)
       when XR_SUCCESS
-      else raise OpenXR::Result.new(result, :xrCreateSession)
+      else raise OpenXR::Result.for(result).new(:xrCreateSession)
     end
   end
 
@@ -47,13 +48,13 @@ class OpenXR::Session < OpenXR::Handle
 
   ##
   # @return [void]
+  # @raise  [Result::Error] if `xrDestroySession` failed
   def destroy!
     return if @struct.nil?
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrdestroysession3
     case result = xrDestroySession(@struct[:handle])
       when XR_SUCCESS then @struct = nil
-      when XR_ERROR_HANDLE_INVALID then raise OpenXR::Result::HandleInvalid.new(:xrDestroySession)
-      else raise OpenXR::Result.new(result, :xrDestroySession) # unreachable
+      else raise OpenXR::Result.for(result).new(:xrDestroySession) # unreachable
     end
   end
 end # OpenXR::Session

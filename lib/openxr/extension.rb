@@ -15,13 +15,14 @@ class OpenXR::Extension < Struct.new(:name, :version)
 
   ##
   # @return [Integer]
+  # @raise  [Result::Error] if `:xrEnumerateInstanceExtensionProperties` failed
   def self.count
     response = FFI::MemoryPointer.new(:uint32)
     begin
       # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrenumerateinstanceextensionproperties3
       case result = xrEnumerateInstanceExtensionProperties(nil, 0, response, nil)
         when XR_SUCCESS then response.read(:uint32)
-        else raise OpenXR::Result.new(result, :xrEnumerateInstanceExtensionProperties)
+        else raise OpenXR::Result.for(result).new(:xrEnumerateInstanceExtensionProperties)
       end
     ensure
       response&.free
@@ -44,6 +45,7 @@ class OpenXR::Extension < Struct.new(:name, :version)
 
   ##
   # @return [Hash<Symbol, Extension>]
+  # @raise  [Result::Error] if `:xrEnumerateInstanceExtensionProperties` failed
   def self.query
     request_count  = self.count
     response_count = FFI::MemoryPointer.new(:uint32)
@@ -63,7 +65,7 @@ class OpenXR::Extension < Struct.new(:name, :version)
             available[extension_name] = self.new(extension_name, extension_version)
             available
           end
-        else raise OpenXR::Result.new(result, :xrEnumerateInstanceExtensionProperties)
+        else raise OpenXR::Result.for(result).new(:xrEnumerateInstanceExtensionProperties)
       end
     ensure
       response_array&.free

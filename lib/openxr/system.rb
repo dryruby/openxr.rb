@@ -14,7 +14,8 @@ class OpenXR::System
   ##
   # @param  [Instance] instance
   # @param  [XrFormFactor, #to_i] form_factor
-  # @return [System]
+  # @return [System] if the form factor is supported
+  # @raise  [Result::Error] if `xrGetSystem` failed
   # @see    https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#form_factor_description
   def self.for_form_factor(instance, form_factor)
     request = XrSystemGetInfo.new
@@ -25,8 +26,8 @@ class OpenXR::System
       # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrgetsystem3
       case result = xrGetSystem(instance.handle, request, system_id)
         when XR_SUCCESS then self.new(instance, system_id.read(XrSystemId))
-        #when XR_ERROR_FORM_FACTOR_UNAVAILABLE then # TODO
-        else raise OpenXR::Result.new(result, :xrGetSystem)
+        when XR_ERROR_FORM_FACTOR_UNAVAILABLE then nil
+        else raise OpenXR::Result.for(result).new(:xrGetSystem)
       end
     ensure
       system_id&.free
@@ -54,6 +55,7 @@ class OpenXR::System
   ##
   # @param  [Instance] instance
   # @param  [API::XrSystemId, #to_i] id
+  # @raise  [Result::Error] if `xrGetSystemProperties` failed
   def initialize(instance, id)
     @instance = instance
     @id = id.to_i
@@ -74,7 +76,7 @@ class OpenXR::System
           :orientation_tracking => response[:trackingProperties][:orientationTracking] == XR_TRUE,
           :position_tracking    => response[:trackingProperties][:positionTracking] == XR_TRUE,
         }
-      else raise OpenXR::Result.new(result, :xrGetSystemProperties)
+      else raise OpenXR::Result.for(result).new(:xrGetSystemProperties)
     end
   end
 end # OpenXR::System

@@ -18,7 +18,6 @@ class OpenXR::System
   # @see    https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#form_factor_description
   def self.for_form_factor(instance, form_factor)
     request = XrSystemGetInfo.new
-    request[:base][:type] = XR_TYPE_SYSTEM_GET_INFO
     request[:formFactor] = form_factor.to_i
     system_id = FFI::MemoryPointer.new(XrSystemId)
 
@@ -60,7 +59,6 @@ class OpenXR::System
     @id = id.to_i
 
     response = XrSystemProperties.new
-    response[:base][:type] = XR_TYPE_SYSTEM_PROPERTIES
 
     # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrgetsystemproperties3
     case result = xrGetSystemProperties(@instance.handle, @id, response)

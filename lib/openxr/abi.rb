@@ -5,6 +5,24 @@ require 'ffi'
 ##
 # The OpenXR application binary interface (ABI).
 module OpenXR::ABI
+  # @private
+  module InitializeWithType
+    def self.included(klass)
+      ##
+      # @param  [FFI::AbstractMemory] pointer
+      def initialize(pointer = nil)
+        super(pointer)
+        self.set_type! if pointer.nil?
+      end
+
+      ##
+      # @return [void]
+      def set_type!
+        self[:base][:type] = self.class.const_get(:TYPE)
+      end
+    end
+  end
+
   ##
   # @see https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#api-version-numbers-and-semantics
   def self.XR_MAKE_VERSION(major, minor, patch)
@@ -228,6 +246,8 @@ module OpenXR::ABI
   end
 
   class XrApiLayerProperties < FFI::Struct
+    TYPE = XR_TYPE_API_LAYER_PROPERTIES
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :layerName,               [:char, XR_MAX_API_LAYER_NAME_SIZE],
            :specVersion,             XrVersion,
@@ -236,6 +256,8 @@ module OpenXR::ABI
   end
 
   class XrExtensionProperties < FFI::Struct
+    TYPE = XR_TYPE_EXTENSION_PROPERTIES
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :extensionName,           [:char, XR_MAX_EXTENSION_NAME_SIZE],
            :extensionVersion,        :uint32
@@ -250,6 +272,8 @@ module OpenXR::ABI
   end
 
   class XrInstanceCreateInfo < FFI::Struct
+    TYPE = XR_TYPE_INSTANCE_CREATE_INFO
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :createFlags,             XrInstanceCreateFlags,
            :applicationInfo,         XrApplicationInfo,
@@ -260,17 +284,23 @@ module OpenXR::ABI
   end
 
   class XrInstanceProperties < FFI::Struct
+    TYPE = XR_TYPE_INSTANCE_PROPERTIES
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :runtimeVersion,          XrVersion,
            :runtimeName,             [:char, XR_MAX_RUNTIME_NAME_SIZE]
   end
 
   class XrEventDataBuffer < FFI::Struct
+    TYPE = XR_TYPE_EVENT_DATA_BUFFER
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :varying,                 :uint8
   end
 
   class XrSystemGetInfo < FFI::Struct
+    TYPE = XR_TYPE_SYSTEM_GET_INFO
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :formFactor,              XrFormFactor
   end
@@ -287,6 +317,8 @@ module OpenXR::ABI
   end
 
   class XrSystemProperties < FFI::Struct
+    TYPE = XR_TYPE_SYSTEM_PROPERTIES
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :systemId,                XrSystemId,
            :vendorId,                :uint32,
@@ -296,6 +328,8 @@ module OpenXR::ABI
   end
 
   class XrSessionCreateInfo < FFI::Struct
+    TYPE = XR_TYPE_SESSION_CREATE_INFO
+    include InitializeWithType
     layout :base,                    XrBaseStructure,
            :createFlags,             XrSessionCreateFlags,
            :systemId,                XrSystemId

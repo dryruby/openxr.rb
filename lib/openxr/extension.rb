@@ -50,7 +50,7 @@ class OpenXR::Extension < Struct.new(:name, :version)
     response_array = FFI::MemoryPointer.new(XrExtensionProperties, request_count)
     begin
       request_count.times do |i|
-        XrExtensionProperties.new(response_array[i])[:base][:type] = XR_TYPE_EXTENSION_PROPERTIES
+        XrExtensionProperties.new(response_array[i]).set_type!
       end
 
       # https://www.khronos.org/registry/OpenXR/specs/1.0/man/html/openxr.html#_xrenumerateinstanceextensionproperties3

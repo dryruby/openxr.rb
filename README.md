@@ -66,7 +66,11 @@ devices.
 See Also
 --------
 
-- [OpenXR.py](https://github.com/drypy/openxr.py): OpenXR bindings Python.
+- [OpenXR.py](https://github.com/drypy/openxr.py):
+  OpenXR bindings for Python.
+
+- [OpenXR.dart](https://github.com/drydart/openxr.dart):
+  OpenXR bindings for Dart & Flutter.
 
 - [Unofficial OpenXR Tests](https://github.com/artob/openxr-rspec):
   An unofficial OpenXR conformance test suite.

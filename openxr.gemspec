@@ -38,6 +38,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake',      '>= 13'
   gem.add_development_dependency 'rspec',     '>= 3.9'
   gem.add_development_dependency 'yard' ,     '>= 0.9'
-  gem.add_runtime_dependency     'ffi',       '~> 1.12'
+  gem.add_runtime_dependency     'dogma.rb',  '~> 0.0'
+  gem.add_runtime_dependency     'ffi',       '~> 1.13'
   gem.post_install_message       = nil
 end

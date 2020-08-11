@@ -11,5 +11,6 @@ group :development do
   gem 'ffidb'
   gem 'rake'
   gem 'rspec'
+  gem 'rubocop', '~> 0.89.1', require: false
   gem 'yard'
 end

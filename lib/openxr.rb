@@ -1,6 +1,10 @@
 # This is free and unencumbered software released into the public domain.
 
+##
+# OpenXR for Ruby.
 module OpenXR; end
+
+require_relative 'openxr/version'
 
 require_relative 'openxr/abi'
 require_relative 'openxr/api'
@@ -16,7 +20,6 @@ require_relative 'openxr/session'
 require_relative 'openxr/space'
 require_relative 'openxr/swapchain'
 require_relative 'openxr/system'
-require_relative 'openxr/version'
 
 module OpenXR
   ##
